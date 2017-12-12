@@ -9,6 +9,7 @@ Then you will be asked, to enter a license. Please copy this license-key: h5Xc-7
 Press enter, and the Software is activated!
 
 2: How to run:
+Download cm.exe from GitHub
 Open cmd.exe (command prompt from windows)
 go into the directory of CM-Cleaner (like cd C:\Users\Name\Downloads)
 run with: cm ACTION_CODE (for help, type: cm help)
