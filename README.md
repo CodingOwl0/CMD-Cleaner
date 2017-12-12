@@ -1,5 +1,5 @@
 # CM-Cleaner
-A Batch-File that cleans and optimize your PC
+A Batch-File that cleans and optimize your PC.
 Copyright: Luca Franziskowski
 
 This Software is free to use.
@@ -14,4 +14,16 @@ Download cm.exe from GitHub
 Open cmd.exe (command prompt from windows)
 go into the directory of CM-Cleaner (like cd C:\Users\Name\Downloads)
 run with: cm ACTION_CODE (for help, type: cm help)
+
+3: What can CM-Cleaner do?
+   Delete Cache and Trash-Bin
+   Release RAM 
+   Optimize Network
+   Check for issues with the HDD/SSD
+   Create Windows Recovery-Disk
+   Clean Cookies
+   ... and so on...
+   
+   
+This Software is only for private use!
 
