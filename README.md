@@ -1,5 +1,6 @@
 # CM-Cleaner
 A Batch-File that cleans and optimize your PC
+Copyright: Luca Franziskowski
 
 This Software is free to use.
 
