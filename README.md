@@ -1,7 +1,7 @@
 # CMD-Cleaner
 A Batch-File that cleans and optimizes your PC.
 
-This Software is free to use-
+This Skript is free to use.
 
 Download cmdc.bat from GitHub.
 Open cmd as administrator (command prompt from windows)
