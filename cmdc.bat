@@ -1,33 +1,21 @@
 @echo off
-title CMD-Cleaner 2
-if %1==main goto main
-if %1==cache goto cache
-if %1==cupdate goto cleanupdate
-if %1==clear goto clear
-if %1==help goto help
-if %1==install goto install
+title CMD-Cleaner
 echo.
 echo **********************
-echo Official CMD-Cleaner
+echo   Simple CMD-Cleaner
 echo **********************
 echo.
-echo Can not find command.
-goto ende2
+if "%1"=="main" goto main
+if "%1"=="cache" goto cache
+if "%1"=="cupdate" goto cleanupdate
+if "%1"=="clear" goto clear
+if "%1"=="help" goto help
+echo.
+echo Command not found.
+goto eof
 
-:install
-echo Installing CMD-Cleaner...
-copy cmdc.exe C:\Users\%Username%
-cd/d C:\Users\%username%
-if not exist cmdc.exe goto ende2
-echo Installed successfully.
-goto ende2
 
 :cleanupdate
-echo.
-echo **********************
-echo Official CMD-Cleaner
-echo **********************
-echo.
 echo Repairing Windows-Updater...
 net stop wuauserv
 net stop cryptSvc
@@ -41,69 +29,49 @@ net start bits
 net start msiserver
 wuauclt /resetauthorization
 wuauclt /detectnow 
-goto ende2
+goto eof
 
 :cache
-echo.
-echo **********************
-echo Official CMD-Cleaner
-echo **********************
-echo.
 echo Cleaning cache...
 ipconfig /flushdns
-echo FreeMem = Space(1000) >ramclean.vbs
+:: echo FreeMem = Space(1000) >ramclean.vbs Doesnt work on Windows 11 anymore...
 rundll32.exe  InetCpl.cpl,ClearMyTracksByProcess 8
-start ramclean.vbs
-timeout/t 1 >nul
-del ramclean.vbs
-if not exist cmdcleaner mkdir cmdcleaner
-cd/d cmdcleaner
-if not exist temp mkdir temp
-copy C:\Users\%Username%\AppData\Local\Microsoft\Windows\WebCache\*.log %appdata%\so >nul
-del C:\Users\%Username%\AppData\Local\Microsoft\Windows\WebCache\*.log /s /q >nul
-copy C:\Windows\Temp\*.tmp %appdata%\so\temp >nul
+:: start ramclean.vbs
+:: timeout/t 1 >nul
+:: del ramclean.vbs /s /q
+if not exist "%temp%\cmdcleaner" mkdir "%temp%\cmdcleaner"
+move "C:\Users\%Username%\AppData\Local\Microsoft\Windows\WebCache\*.log" "%temp%\cmdcleaner" >nul
+:: del C:\Users\%Username%\AppData\Local\Microsoft\Windows\WebCache\*.log /s /q >nul
+move "C:\Windows\Temp\*.tmp" "%temp%\cmdcleaner" >nul
 del C:\Windows\Temp\*.tmp /s /q >nul
 echo off | clip
 goto ende2
 
 
 :main
-echo.
-echo **********************
-echo Official CMD-Cleaner
-echo **********************
-echo.
-echo Cleaning some stuff...
+echo Cleaning some junk-files...
 rundll32.exe  InetCpl.cpl,ClearMyTracksByProcess 8
 rundll32.exe  InetCpl.cpl,ClearMyTracksByProcess 255
 ipconfig /flushdns
 rd /s /q c:\$Recycle.Bin >nul
 echo off | clip
-cd %appdata%
-echo FreeMem = Space(1000) >ramclean.vbs
-start ramclean.vbs
+echo FreeMem = Space(1000) >"%appdata%\ramclean.vbs"
+start "%appdata%\ramclean.vbs"
 timeout/t 1 >nul
-del ramclean.vbs
-if not exist cmdcleaner mkdir cmdcleaner
-cd/d cmdcleaner
-if not exist temp mkdir temp
-copy C:\Users\%Username%\AppData\Local\Microsoft\Windows\WebCache\*.log %appdata%\so >nul
-del C:\Users\%Username%\AppData\Local\Microsoft\Windows\WebCache\*.log /s /q >nul
-copy C:\Windows\Temp\*.tmp %appdata%\so\temp >nul
-del C:\Windows\Temp\*.tmp /s /q >nul
+del "%appdata%\ramclean.vbs" /s /q
+if not exist "%temp%\cmdcleaner" mkdir "%temp%\cmdcleaner"
+move C:\Users\%Username%\AppData\Local\Microsoft\Windows\WebCache\*.log "%temp%\cmdcleaner" >nul
+:: del C:\Users\%Username%\AppData\Local\Microsoft\Windows\WebCache\*.log /s /q >nul
+move C:\Windows\Temp\*.tmp "%temp%\cmdcleaner" >nul
+:: del C:\Windows\Temp\*.tmp /s /q >nul
 echo.
-echo + System is now optimized!
+echo Process is done.
 echo.
 goto ende
 
 :help
 echo.
-echo    **********************
-echo     Official CMD-Cleaner
-echo    **********************
-echo    (C) Luca Franziskowski
-echo.
-echo main     = Main-Cleaner
+echo main     = Main cleaning-process
 echo cache    = Cleans all sorts of cache
 echo clear    = Clear Browser-History
 echo           (only IExplorer)
@@ -116,22 +84,22 @@ goto ende2
 :clear 
 rundll32.exe  InetCpl.cpl,ClearMyTracksByProcess 8
 rundll32.exe  InetCpl.cpl,ClearMyTracksByProcess 255
-del C:\Users\%username%\Downloads\*.* /s /q
+del C:\Users\"%username%"\Downloads\*.* /s /q
 ipconfig /flushdns
 rd /s /q c:\$Recycle.Bin
-del C:\Users\%Username%\AppData\Local\Microsoft\Windows\WebCache\*.log 
+if exist "C:\Users\%Username%\AppData\Local\Microsoft\Windows\WebCache\*.log" del "C:\Users\%Username%\AppData\Local\Microsoft\Windows\WebCache\*.log" /s /q
 echo off | clip
-echo traces are now deleted!
+echo Junk-Files have been deleted.
 goto ende
 
 
 :ende
+echo.
+echo.
 echo         ***** Information *******
 echo If a few messages appear, try to run as admin.
 echo Error-Messages are not critical, so you can
-echo ignore them without worries...
-echo **********************************************
-echo Thanks for using the CMD-Cleaner!
+echo ignore them without any worries...
 echo **********************************************
 echo.
-:ende2
+:eof
